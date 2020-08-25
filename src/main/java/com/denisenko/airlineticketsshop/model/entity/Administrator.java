@@ -1,15 +1,8 @@
 package com.denisenko.airlineticketsshop.model.entity;
 
 
-import com.denisenko.airlineticketsshop.model.Login;
-
-import javax.persistence.Entity;
-import javax.validation.constraints.NotNull;
-
-
 public class Administrator extends User {
 
-    @NotNull
     private String position;
 
     public Administrator(){

@@ -2,27 +2,34 @@ package com.denisenko.airlineticketsshop.model.rest.response;
 
 import javax.validation.constraints.NotNull;
 
-public class AdminRegistrationResponse extends UserAbstractResponse {
-
+public class ClientRegistrationResponse extends UserAbstractResponse {
     @NotNull
     private long id;
+
     @NotNull
     private String firstName;
+
     @NotNull
     private String lastName;
+
     private String patronymic;
+
     @NotNull
-    private String position;
+    private String email;
+
+    @NotNull
+    private String phone;
+
     @NotNull
     private String userType;
 
-
-    public AdminRegistrationResponse(@NotNull long id, @NotNull String firstName, @NotNull String lastName, String patronymic, @NotNull String position, @NotNull String userType) {
+    public ClientRegistrationResponse(@NotNull long id, @NotNull String firstName, @NotNull String lastName, String patronymic, @NotNull String email, @NotNull String phone, @NotNull String userType) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.patronymic = patronymic;
-        this.position = position;
+        this.email = email;
+        this.phone = phone;
         this.userType = userType;
     }
 
@@ -58,12 +65,20 @@ public class AdminRegistrationResponse extends UserAbstractResponse {
         this.patronymic = patronymic;
     }
 
-    public String getPosition() {
-        return position;
+    public String getEmail() {
+        return email;
     }
 
-    public void setPosition(String position) {
-        this.position = position;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getUserType() {
@@ -72,17 +87,5 @@ public class AdminRegistrationResponse extends UserAbstractResponse {
 
     public void setUserType(String userType) {
         this.userType = userType;
-    }
-
-    @Override
-    public String toString() {
-        return "AdminRegistrationResponse{" +
-            "id=" + id +
-            ", firstName='" + firstName + '\'' +
-            ", lastName='" + lastName + '\'' +
-            ", patronymic='" + patronymic + '\'' +
-            ", position='" + position + '\'' +
-            ", userType='" + userType + '\'' +
-            '}';
     }
 }

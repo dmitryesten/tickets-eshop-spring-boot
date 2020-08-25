@@ -1,4 +1,4 @@
-package com.denisenko.airlineticketsshop.model;
+package com.denisenko.airlineticketsshop.model.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -18,7 +18,7 @@ public class Login {
     @NotNull
     private String password;
 
-    public Login(){}
+    public Login(long primaryKey){}
 
     public Login(long id, @NotNull String nickname, @NotNull String password) {
         this.id = id;
@@ -70,7 +70,7 @@ public class Login {
 
     @Override
     public String toString() {
-        return "Login{" +
+        return "LoginController{" +
             "id=" + id +
             ", nickname='" + nickname + '\'' +
             ", password='" + password + '\'' +

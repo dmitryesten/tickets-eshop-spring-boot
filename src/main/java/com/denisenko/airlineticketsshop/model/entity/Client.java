@@ -1,17 +1,11 @@
 package com.denisenko.airlineticketsshop.model.entity;
 
-import com.denisenko.airlineticketsshop.model.Login;
-
 
 public class Client extends User {
 
     private String email;
 
     private String phone;
-
-    protected Client(){
-        super();
-    }
 
     public String getEmail() {
         return email;
@@ -35,6 +29,7 @@ public class Client extends User {
         public ClientBuilder(){
             this.user = new Client();
         }
+
         public ClientBuilder setId(long id){
             user.setId(id);
             return this;

@@ -2,7 +2,8 @@ package com.denisenko.airlineticketsshop.model.rest.request;
 
 import javax.validation.constraints.NotNull;
 
-public class AdminRegistrationRequest {
+public class ClientRegistrationRequest {
+
     @NotNull
     private String firstName;
     @NotNull
@@ -11,18 +12,22 @@ public class AdminRegistrationRequest {
     private String patronymic;
 
     @NotNull
-    private String position;
+    private String email;
+
+    @NotNull
+    private String phone;
+
     @NotNull
     private String login;
     @NotNull
     private String password;
-
-    public AdminRegistrationRequest() {}
-    public AdminRegistrationRequest(@NotNull String firstName, @NotNull String lastName, String patronymic, @NotNull String position, @NotNull String login, @NotNull String password) {
+    public ClientRegistrationRequest(){}
+    public ClientRegistrationRequest(@NotNull String firstName, @NotNull String lastName, String patronymic, @NotNull String email, @NotNull String phone, @NotNull String login, @NotNull String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.patronymic = patronymic;
-        this.position = position;
+        this.email = email;
+        this.phone = phone;
         this.login = login;
         this.password = password;
     }
@@ -31,8 +36,8 @@ public class AdminRegistrationRequest {
         return firstName;
     }
 
-    public void setFirstName(String fistName) {
-        this.firstName = fistName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public String getLastName() {
@@ -51,12 +56,20 @@ public class AdminRegistrationRequest {
         this.patronymic = patronymic;
     }
 
-    public String getPosition() {
-        return position;
+    public String getEmail() {
+        return email;
     }
 
-    public void setPosition(String position) {
-        this.position = position;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getLogin() {
@@ -73,17 +86,5 @@ public class AdminRegistrationRequest {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    @Override
-    public String toString() {
-        return "AdminRegistrationRequest{" +
-            "firstName='" + firstName + '\'' +
-            ", lastName='" + lastName + '\'' +
-            ", patronymic='" + patronymic + '\'' +
-            ", position='" + position + '\'' +
-            ", login='" + login + '\'' +
-            ", password='" + password + '\'' +
-            '}';
     }
 }

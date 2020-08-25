@@ -1,14 +1,25 @@
-DROP TABLE IF EXISTS billionaires;
 
-create table login (
-  id INT AUTO_INCREMENT  PRIMARY KEY,
+CREATE SEQUENCE IF NOT EXISTS SEQ_ID
+START WITH 1
+INCREMENT BY 1
+NO CACHE;
+
+create table IF NOT EXISTS login (
+  id INT default seq_id.nextval primary key,
   nickname VARCHAR(250) NOT NULL,
   password VARCHAR(250) NOT NULL,
   UNIQUE KEY name (nickname)
 );
 
-create table user (
-  id INT AUTO_INCREMENT  PRIMARY KEY,
+create table IF NOT EXISTS cookie_login (
+  id INT default seq_id.nextval primary key,
+  id_login INT,
+  value_cookie VARCHAR(250) NOT NULL,
+  CONSTRAINT fk_id_login_cookie foreign key (id_login) references login(id)
+);
+
+create table IF NOT EXISTS user (
+  id INT default seq_id.nextval primary key,
   id_login INT,
   first_name VARCHAR(250) NOT NULL,
   last_name VARCHAR(250) NOT NULL,
@@ -25,7 +36,5 @@ INSERT INTO login (id, nickname, password) VALUES
     (13, 'Nickname2', '134'),
     (14, 'Nickname4', '312');
 
-//insert into  user (id_login, first_name, last_name, patronymic_name, user_type, position)
-// VALUES (1, 'Dima', 'Denisenko', 'Adminovich', 'admin', 'dev')
 
 
