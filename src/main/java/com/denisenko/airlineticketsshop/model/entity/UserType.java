@@ -1,11 +1,11 @@
 package com.denisenko.airlineticketsshop.model.entity;
 
-public enum EntitySystem {
-    ADMIN("admin"), CLIENT("client");
+public enum UserType {
+    ADMIN("ADMIN"), CLIENT("CLIENT");
 
     private String value;
 
-    EntitySystem(String typeEntity) {
+    UserType(String typeEntity) {
         this.value = typeEntity;
     }
 

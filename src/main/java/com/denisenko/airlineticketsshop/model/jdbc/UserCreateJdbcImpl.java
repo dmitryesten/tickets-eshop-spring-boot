@@ -15,27 +15,27 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 @Repository
-public class UserCreateJdbc implements IUserCreateDao<User>  {
+public class UserCreateJdbcImpl implements IUserCreateDao<User>  {
 
     @Autowired
-    DataSourceConfig dataSourceConfig;
+    private DataSourceConfig dataSourceConfig;
 
     @Override
     public User create(User user) throws SQLException {
-        String insertLogin = "INSERT INTO login (id, nickname, password) VALUES (seq_id.nextval, ?, ?)";
+        String insertLogin = "INSERT INTO login_user (id, login, password) VALUES (seq_id.nextval, ?, ?)";
         String insertUser = "INSERT INTO user (id, id_login, first_name, last_name, patronymic_name, user_type, position, email, phone) VALUES (seq_id.nextval, ?, ?, ?, ?, ?, ?, ?, ?)";
         User userTemporary = user;
-        try(Connection connection = dataSourceConfig.getDataSourceTest().getConnection();
+        try(Connection connection = dataSourceConfig.getDataSource().getConnection();
             PreparedStatement preparedStatementLogin = connection.prepareStatement(insertLogin, Statement.RETURN_GENERATED_KEYS);) {
 
-            preparedStatementLogin.setString(1, user.getLogin().getNickname());
-            preparedStatementLogin.setString(2,  user.getLogin().getPassword());
+            preparedStatementLogin.setString(1, user.getLoginObject().getLogin());
+            preparedStatementLogin.setString(2,  user.getLoginObject().getPassword());
             preparedStatementLogin.executeUpdate();
 
-            userTemporary.setLogin(new Login(getPrimaryKey(preparedStatementLogin), user.getLogin().getNickname(), user.getLogin().getPassword()));
+            userTemporary.setLoginObject(new Login(getPrimaryKey(preparedStatementLogin), user.getLoginObject().getLogin(), user.getLoginObject().getPassword()));
 
             try(PreparedStatement preparedStatementUser = connection.prepareStatement(insertUser, Statement.RETURN_GENERATED_KEYS)){
-                preparedStatementUser.setLong(1, userTemporary.getLogin().getId());
+                preparedStatementUser.setLong(1, userTemporary.getLoginObject().getId());
                 preparedStatementUser.setString(2, userTemporary.getFirstName());
                 preparedStatementUser.setString(3, userTemporary.getLastName());
                 preparedStatementUser.setString(4, userTemporary.getPatronymicName());
@@ -60,7 +60,5 @@ public class UserCreateJdbc implements IUserCreateDao<User>  {
         }
         return userTemporary;
     }
-
-
 
 }

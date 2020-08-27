@@ -2,10 +2,10 @@ package com.denisenko.airlineticketsshop.controller.auth;
 
 import com.denisenko.airlineticketsshop.model.entity.Login;
 import com.denisenko.airlineticketsshop.model.entity.Administrator;
-import com.denisenko.airlineticketsshop.model.entity.EntitySystem;
-import com.denisenko.airlineticketsshop.model.jdbc.UserCreateJdbc;
-import com.denisenko.airlineticketsshop.model.rest.request.AdminRegistrationRequest;
-import com.denisenko.airlineticketsshop.model.rest.response.AdminRegistrationResponse;
+import com.denisenko.airlineticketsshop.model.entity.UserType;
+import com.denisenko.airlineticketsshop.model.jdbc.UserCreateJdbcImpl;
+import com.denisenko.airlineticketsshop.model.dto.request.AdminRegistrationRequest;
+import com.denisenko.airlineticketsshop.model.dto.response.AdminRegistrationResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,28 +19,30 @@ import java.sql.SQLException;
 public class AdminRegistrationController {
 
     @Autowired
-    UserCreateJdbc adminCreateJdbc;
+    UserCreateJdbcImpl adminCreateJdbc;
 
     @PostMapping(value = "/api/admin")
     public ResponseEntity<AdminRegistrationResponse> createAdmin(@Valid @RequestBody AdminRegistrationRequest request) throws SQLException {
         Administrator user = new Administrator();
-        user.setLogin(new Login(request.getLogin(), request.getPassword()));
+        user.setLoginObject(new Login(request.getLogin(), request.getPassword()));
         user.setFirstName(request.getFirstName());
         user.setLastName(request.getLastName());
         user.setPatronymicName(request.getPatronymic());
-        user.setUserType(EntitySystem.ADMIN);
+        user.setUserType(UserType.ADMIN);
         user.setPosition(request.getPosition());
 
         Administrator createdUser = (Administrator) adminCreateJdbc.create(user);
 
         return ResponseEntity.ok()
-            .body(new AdminRegistrationResponse(
-                createdUser.getId(),
-                createdUser.getFirstName(),
-                createdUser.getLastName(),
-                createdUser.getPatronymicName(),
-                createdUser.getPosition(),
-                EntitySystem.ADMIN.getTypeEntityString()));
+            .body(AdminRegistrationResponse.builder()
+                    .setId(createdUser.getId())
+                    .setFirstName(createdUser.getFirstName())
+                    .setLastName(createdUser.getLastName())
+                    .setPatronymicName(createdUser.getPatronymicName())
+                    .setPosition(createdUser.getPosition())
+                    .setUserType(UserType.ADMIN)
+                    .build()
+            );
     }
 
 }

@@ -40,10 +40,10 @@ public class Administrator extends User {
             return this;
         }
         public AdministratorBuilder setLogin(Login login){
-            user.setLogin(login);
+            user.setLoginObject(login);
             return this;
         }
-        public AdministratorBuilder setUserType(EntitySystem userType){
+        public AdministratorBuilder setUserType(UserType userType){
             user.setUserType(userType);
             return this;
         }

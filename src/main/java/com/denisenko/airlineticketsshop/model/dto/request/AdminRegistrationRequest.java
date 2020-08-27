@@ -1,24 +1,36 @@
-package com.denisenko.airlineticketsshop.model.rest.request;
+package com.denisenko.airlineticketsshop.model.dto.request;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 public class AdminRegistrationRequest {
-    @NotNull
+
+    @NotNull(message = "FirstName may not be null")
+    @NotEmpty (message = "FirstName may not be empty")
     private String firstName;
-    @NotNull
+
+    @NotNull(message = "LastName may not be null")
+    @NotEmpty (message = "LastName may not be empty")
     private String lastName;
 
+    @NotNull(message = "Patronymic may not be null")
     private String patronymic;
 
-    @NotNull
+    @NotNull(message = "Position may not be null")
+    @NotEmpty (message = "Position may not be empty")
     private String position;
-    @NotNull
+
+    @NotNull(message = "Login may not be null")
+    @NotEmpty (message = "Login may not be empty")
     private String login;
-    @NotNull
+
+    @NotNull(message = "Password may not be null")
+    @NotEmpty (message = "Password may not be empty")
     private String password;
 
     public AdminRegistrationRequest() {}
-    public AdminRegistrationRequest(@NotNull String firstName, @NotNull String lastName, String patronymic, @NotNull String position, @NotNull String login, @NotNull String password) {
+
+    public AdminRegistrationRequest(@NotNull @NotEmpty String firstName, @NotNull @NotEmpty String lastName, String patronymic, @NotNull @NotEmpty String position, @NotNull @NotEmpty String login, @NotNull @NotEmpty String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.patronymic = patronymic;

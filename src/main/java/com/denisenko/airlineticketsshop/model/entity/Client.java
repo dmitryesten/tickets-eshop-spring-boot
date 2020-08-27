@@ -7,6 +7,10 @@ public class Client extends User {
 
     private String phone;
 
+    public Client(){
+        super();
+    }
+
     public String getEmail() {
         return email;
     }
@@ -47,10 +51,10 @@ public class Client extends User {
             return this;
         }
         public ClientBuilder setLogin(Login login){
-            user.setLogin(login);
+            user.setLoginObject(login);
             return this;
         }
-        public ClientBuilder setUserType(EntitySystem userType){
+        public ClientBuilder setUserType(UserType userType){
             user.setUserType(userType);
             return this;
         }

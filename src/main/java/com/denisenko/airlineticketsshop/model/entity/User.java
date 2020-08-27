@@ -15,10 +15,10 @@ public abstract class User {
 
     private Login login;
 
-    private EntitySystem userType;
+    private UserType userType;
 
     protected User(){}
-    public User(long id, @NotNull String firstName, @NotNull String lastName, String patronymicName, @NotNull Login login, @NotNull EntitySystem userType) {
+    public User(long id, @NotNull String firstName, @NotNull String lastName, String patronymicName, @NotNull Login login, @NotNull UserType userType) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -27,7 +27,7 @@ public abstract class User {
         this.userType = userType;
     }
 
-    public User(@NotNull String firstName, @NotNull String lastName, String patronymicName, @NotNull Login login, @NotNull EntitySystem userType) {
+    public User(@NotNull String firstName, @NotNull String lastName, String patronymicName, @NotNull Login login, @NotNull UserType userType) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.patronymicName = patronymicName;
@@ -67,19 +67,22 @@ public abstract class User {
         this.patronymicName = patronymicName;
     }
 
-    public Login getLogin() {
+    public Login getLoginObject() {
         return login;
     }
 
-    public void setLogin(Login login) {
+    public void setLoginObject(Login login) {
         this.login = login;
     }
 
-    public EntitySystem getUserType() {
+    public UserType getUserType() {
         return userType;
     }
 
-    public void setUserType(EntitySystem userType) {
+    public void setUserType(UserType userType) {
         this.userType = userType;
+    }
+    public void setUserType(String userType) {
+        this.userType = UserType.valueOf(userType);
     }
 }

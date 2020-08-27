@@ -1,4 +1,4 @@
-package com.denisenko.airlineticketsshop.model.rest.request;
+package com.denisenko.airlineticketsshop.model.dto.request;
 
 import javax.validation.constraints.NotNull;
 

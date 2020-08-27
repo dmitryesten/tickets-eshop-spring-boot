@@ -2,10 +2,10 @@ package com.denisenko.airlineticketsshop.controller.auth;
 
 import com.denisenko.airlineticketsshop.model.entity.Login;
 import com.denisenko.airlineticketsshop.model.entity.Client;
-import com.denisenko.airlineticketsshop.model.entity.EntitySystem;
-import com.denisenko.airlineticketsshop.model.jdbc.UserCreateJdbc;
-import com.denisenko.airlineticketsshop.model.rest.request.ClientRegistrationRequest;
-import com.denisenko.airlineticketsshop.model.rest.response.ClientRegistrationResponse;
+import com.denisenko.airlineticketsshop.model.entity.UserType;
+import com.denisenko.airlineticketsshop.model.jdbc.UserCreateJdbcImpl;
+import com.denisenko.airlineticketsshop.model.dto.request.ClientRegistrationRequest;
+import com.denisenko.airlineticketsshop.model.dto.response.ClientRegistrationResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,7 +19,7 @@ import java.sql.SQLException;
 public class ClientRegistrationController {
 
     @Autowired
-    UserCreateJdbc clientCreateJdbc;
+    UserCreateJdbcImpl clientCreateJdbc;
 
     @PostMapping(value = "/api/client")
     public ResponseEntity<ClientRegistrationResponse> createAdmin(@Valid @RequestBody ClientRegistrationRequest request) throws SQLException {
@@ -30,20 +30,21 @@ public class ClientRegistrationController {
             .setLogin(new Login(request.getLogin(), request.getPassword()))
             .setEmail(request.getEmail())
             .setPhone(request.getPhone())
-            .setUserType(EntitySystem.CLIENT)
+            .setUserType(UserType.CLIENT)
             .build();
 
         Client createdUser = (Client) clientCreateJdbc.create(user);
 
         return ResponseEntity.ok()
-            .body(new ClientRegistrationResponse(
-                createdUser.getId(),
-                createdUser.getFirstName(),
-                createdUser.getLastName(),
-                createdUser.getPatronymicName(),
-                createdUser.getEmail(),
-                createdUser.getPhone(),
-                EntitySystem.CLIENT.getTypeEntityString()));
+            .body(ClientRegistrationResponse.builder()
+                .setId(createdUser.getId())
+                .setFirstName(createdUser.getFirstName())
+                .setLastName(createdUser.getLastName())
+                .setPatronymicName(createdUser.getPatronymicName())
+                .setUserType(user.getUserType())
+                .setEmail(user.getEmail())
+                .setPhone(user.getPhone())
+                .build());
     }
 
 }

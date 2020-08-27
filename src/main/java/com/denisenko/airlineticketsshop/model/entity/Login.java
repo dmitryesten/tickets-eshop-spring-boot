@@ -13,21 +13,21 @@ public class Login {
     private long id;
 
     @NotNull
-    private String nickname;
+    private String login;
 
     @NotNull
     private String password;
 
-    public Login(long primaryKey){}
+    public Login(){}
 
-    public Login(long id, @NotNull String nickname, @NotNull String password) {
+    public Login(long id, @NotNull String login, @NotNull String password) {
         this.id = id;
-        this.nickname = nickname;
+        this.login = login;
         this.password = password;
     }
 
-    public Login(@NotNull String nickname, @NotNull String password) {
-        this(-1L, nickname, password);
+    public Login(@NotNull String login, @NotNull String password) {
+        this(-1L, login, password);
     }
 
     public long getId() {
@@ -38,12 +38,12 @@ public class Login {
         this.id = id;
     }
 
-    public String getNickname() {
-        return nickname;
+    public String getLogin() {
+        return login;
     }
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     public String getPassword() {
@@ -59,20 +59,20 @@ public class Login {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Login login = (Login) o;
-        return nickname.equals(login.nickname) &&
+        return login.equals(login.login) &&
             password.equals(login.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(nickname, password);
+        return Objects.hash(login, password);
     }
 
     @Override
     public String toString() {
         return "LoginController{" +
             "id=" + id +
-            ", nickname='" + nickname + '\'' +
+            ", login='" + login + '\'' +
             ", password='" + password + '\'' +
             '}';
     }

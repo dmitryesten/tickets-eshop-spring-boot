@@ -1,28 +1,35 @@
-package com.denisenko.airlineticketsshop.model.rest.response;
+package com.denisenko.airlineticketsshop.model.dto.response;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-public class AdminRegistrationResponse extends UserAbstractResponse {
+public abstract class AbstractUserRegistrationResponseDto {
 
-    @NotNull
+    @NotNull(message = "ID may not be null")
+    @NotEmpty (message = "ID may not be empty")
     private long id;
-    @NotNull
+
+    @NotNull(message = "FirstName may not be null")
+    @NotEmpty (message = "FirstName may not be empty")
     private String firstName;
-    @NotNull
+
+    @NotNull(message = "LastName may not be null")
+    @NotEmpty (message = "LastName may not be empty")
     private String lastName;
     private String patronymic;
-    @NotNull
-    private String position;
-    @NotNull
+
+    @NotNull(message = "UserType may not be null")
+    @NotEmpty (message = "UserType may not be empty")
     private String userType;
 
 
-    public AdminRegistrationResponse(@NotNull long id, @NotNull String firstName, @NotNull String lastName, String patronymic, @NotNull String position, @NotNull String userType) {
+    public AbstractUserRegistrationResponseDto(){}
+
+    public AbstractUserRegistrationResponseDto(@NotNull @NotEmpty long id, @NotNull @NotEmpty String firstName, @NotNull @NotEmpty String lastName, String patronymic, @NotNull @NotEmpty String userType) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.patronymic = patronymic;
-        this.position = position;
         this.userType = userType;
     }
 
@@ -58,31 +65,11 @@ public class AdminRegistrationResponse extends UserAbstractResponse {
         this.patronymic = patronymic;
     }
 
-    public String getPosition() {
-        return position;
-    }
-
-    public void setPosition(String position) {
-        this.position = position;
-    }
-
     public String getUserType() {
         return userType;
     }
 
     public void setUserType(String userType) {
         this.userType = userType;
-    }
-
-    @Override
-    public String toString() {
-        return "AdminRegistrationResponse{" +
-            "id=" + id +
-            ", firstName='" + firstName + '\'' +
-            ", lastName='" + lastName + '\'' +
-            ", patronymic='" + patronymic + '\'' +
-            ", position='" + position + '\'' +
-            ", userType='" + userType + '\'' +
-            '}';
     }
 }
