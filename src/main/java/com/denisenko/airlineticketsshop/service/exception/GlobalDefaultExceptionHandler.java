@@ -3,6 +3,7 @@ package com.denisenko.airlineticketsshop.service.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
@@ -12,7 +13,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class GlobalDefaultExceptionHandler extends ResponseEntityExceptionHandler  {
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorCustomTemplate> customHandleNotFound(Exception ex) {
+    public ResponseEntity<ErrorCustomTemplate> customHandleNotFound(Throwable ex) {
         StringBuilder stringBuilder = new StringBuilder(ex.getMessage());
 
         String errorCode = stringBuilder.substring(0, stringBuilder.indexOf("&")).trim();
@@ -21,6 +22,22 @@ public class GlobalDefaultExceptionHandler extends ResponseEntityExceptionHandle
         ErrorCustomTemplate errors = new ErrorCustomTemplate(errorCode, ex.getStackTrace()[0].toString(), message);
 
         return new ResponseEntity<>(errors, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(MissingRequestHeaderException.class)
+    protected ResponseEntity<ErrorCustomTemplate> handleEntityNotFound(MissingRequestHeaderException ex) {
+        ErrorCustomTemplate errorCustomTemplate =
+            new ErrorCustomTemplate("ENTITY_NOT_FOUND_EXCEPTION", ex.getStackTrace()[0].toString(), ex.getMessage());
+
+        return new ResponseEntity<>(errorCustomTemplate, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(CookieNotFoundException.class)
+    protected ResponseEntity<ErrorCustomTemplate> handleEntityNotFound(CookieNotFoundException ex) {
+        ErrorCustomTemplate errorCustomTemplate =
+            new ErrorCustomTemplate("ENTITY_NOT_FOUND_EXCEPTION", ex.getStackTrace()[0].toString(), ex.getMessage());
+
+        return new ResponseEntity<>(errorCustomTemplate, HttpStatus.NOT_FOUND);
     }
 
 }

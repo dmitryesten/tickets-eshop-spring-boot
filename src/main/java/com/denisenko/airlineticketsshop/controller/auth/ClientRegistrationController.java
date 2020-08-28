@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import java.sql.SQLException;
 
-@RestController
+
 public class ClientRegistrationController {
 
     @Autowired

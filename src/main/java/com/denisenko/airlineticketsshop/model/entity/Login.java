@@ -8,7 +8,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name="LOGIN")
-public class Login {
+public class Login extends User {
     @Id
     private long id;
 
@@ -70,7 +70,7 @@ public class Login {
 
     @Override
     public String toString() {
-        return "LoginController{" +
+        return "CookieSessionController{" +
             "id=" + id +
             ", login='" + login + '\'' +
             ", password='" + password + '\'' +

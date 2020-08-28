@@ -2,7 +2,7 @@ package com.denisenko.airlineticketsshop.model.entity;
 
 import com.denisenko.airlineticketsshop.service.exception.InvalidObjectFactoryException;
 
-public class UserFactory {
+public class UserFactoryEntity {
 
     public static User getFactory(UserType userType) throws InvalidObjectFactoryException {
         switch (userType){

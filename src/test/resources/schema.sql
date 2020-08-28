@@ -34,15 +34,7 @@ create table if not exists user (
   constraint ck_phone check (case user_type when 'admin' then null end)
 );
 
-create index idx_cookie_login$value on cookie_login (value_cookie);
+create index if not exists  idx_cookie_login$value on cookie_login (value_cookie);
 
 
-insert into login_user (id, login, password) values (1, 'Test1', '123');
-insert into login_user (id, login, password) values (2, 'Test2', '123');
-insert into user (id, id_login, first_name, last_name, patronymic_name, user_type, position)
-values (3, 1, 'Admin', 'Adminov', 'Adminovich', 'admin', 'главный менеджер');
-insert into user (id, id_login, first_name, last_name, patronymic_name, user_type, email, phone)
-values (4, 2, 'Иван', 'Иванов', 'Иванович', 'client',  'iva@mail.ru', '+79008000000');
-
-insert into cookie_login (id_login, value_cookie) values (2, '11-11');
-insert into cookie_login (id_login, value_cookie) values (2, '22-22a');
+insert into login_user (id, login, password) values (1, 'Test11', '123');

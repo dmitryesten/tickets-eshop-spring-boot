@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+
 public class LoginJdbcImpl implements ILoginDao<User> {
 
     @Autowired
@@ -33,7 +34,7 @@ public class LoginJdbcImpl implements ILoginDao<User> {
             while(resultSet.next()){
                 String userType = resultSet.getString("USER_TYPE").trim().toUpperCase();
                 System.out.println("UserType = "+ userType);
-                    userFactory = UserFactory.getFactory(userType);
+                    userFactory = UserFactoryEntity.getFactory(userType);
                     userFactory.setUserType(userType);
                     userFactory.setId(resultSet.getLong("ID"));
                     userFactory.setFirstName(resultSet.getString("FIRST_NAME"));
@@ -42,7 +43,6 @@ public class LoginJdbcImpl implements ILoginDao<User> {
                     userFactory.setLoginObject(new Login(resultSet.getString("LOGIN"), resultSet.getString("PASSWORD")));
 
                 if(userFactory instanceof Administrator){
-                    //((Administrator) userFactory).setPosition(resultSet.getString("POSITION"));
                     administrator = (Administrator) userFactory;
                     administrator.setPosition(resultSet.getString("POSITION"));
                 } else if (userFactory instanceof Client) {

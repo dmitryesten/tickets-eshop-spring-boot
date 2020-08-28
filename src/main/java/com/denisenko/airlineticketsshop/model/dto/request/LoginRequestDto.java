@@ -2,6 +2,7 @@ package com.denisenko.airlineticketsshop.model.dto.request;
 
 import javax.validation.constraints.NotNull;
 
+
 public class LoginRequestDto {
 
     @NotNull
