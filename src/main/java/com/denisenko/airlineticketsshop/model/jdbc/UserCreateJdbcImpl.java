@@ -7,6 +7,7 @@ import com.denisenko.airlineticketsshop.model.entity.Administrator;
 import com.denisenko.airlineticketsshop.model.entity.Client;
 import com.denisenko.airlineticketsshop.model.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
@@ -15,6 +16,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 @Repository
+@Qualifier("userCreateJdbc")
 public class UserCreateJdbcImpl implements IUserCreateDao<User>  {
 
     @Autowired

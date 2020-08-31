@@ -2,20 +2,14 @@ package com.denisenko.airlineticketsshop.config;
 
 import com.denisenko.airlineticketsshop.model.entity.Login;
 import com.denisenko.airlineticketsshop.model.entity.User;
-import com.denisenko.airlineticketsshop.model.jdbc.CookieJdbcImpl;
-import com.denisenko.airlineticketsshop.model.jdbc.ICookieJdbc;
-import com.denisenko.airlineticketsshop.model.jdbc.ILoginDao;
-import com.denisenko.airlineticketsshop.model.jdbc.LoginJdbcImpl;
+import com.denisenko.airlineticketsshop.model.jdbc.*;
 import org.modelmapper.ModelMapper;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.*;
 
-import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.SQLException;
 
 @Configuration
+@Import(DataSourceConfig.class)
 public class AppConfiguration {
 
     @Bean
@@ -24,17 +18,24 @@ public class AppConfiguration {
     }
 
     @Bean
+    @Primary
+    @Qualifier("loginJdbcImpl")
     public ILoginDao<User> getLogin(){
         return new LoginJdbcImpl();
     }
 
     @Bean
+    @Primary
+    @Qualifier("cookieJdbc")
     public ICookieJdbc getCookie(){
         return new CookieJdbcImpl();
     }
 
     @Bean
-    public DataSourceConfig getDataSourceCongif(){
-        return new DataSourceConfig();
+    @Primary
+    @Qualifier("userCreateJdbc")
+    public IUserCreateDao getCreatedUserJdbc(){
+        return new UserCreateJdbcImpl();
     }
+
 }

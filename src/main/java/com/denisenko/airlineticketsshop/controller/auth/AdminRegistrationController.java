@@ -3,10 +3,12 @@ package com.denisenko.airlineticketsshop.controller.auth;
 import com.denisenko.airlineticketsshop.model.entity.Login;
 import com.denisenko.airlineticketsshop.model.entity.Administrator;
 import com.denisenko.airlineticketsshop.model.entity.UserType;
+import com.denisenko.airlineticketsshop.model.jdbc.IUserCreateDao;
 import com.denisenko.airlineticketsshop.model.jdbc.UserCreateJdbcImpl;
 import com.denisenko.airlineticketsshop.model.dto.request.AdminRegistrationRequest;
 import com.denisenko.airlineticketsshop.model.dto.response.AdminRegistrationResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,7 +21,8 @@ import java.sql.SQLException;
 public class AdminRegistrationController {
 
     @Autowired
-    UserCreateJdbcImpl adminCreateJdbc;
+    @Qualifier("userCreateJdbc")
+    private IUserCreateDao adminCreateJdbc;
 
     @PostMapping(value = "/api/admin")
     public ResponseEntity<AdminRegistrationResponse> createAdmin(@Valid @RequestBody AdminRegistrationRequest request) throws SQLException {

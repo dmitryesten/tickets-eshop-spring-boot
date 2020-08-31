@@ -4,17 +4,20 @@ import com.denisenko.airlineticketsshop.config.DataSourceConfig;
 import com.denisenko.airlineticketsshop.model.entity.*;
 import com.denisenko.airlineticketsshop.service.exception.InvalidObjectFactoryException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-
+@Repository
+@Qualifier("loginJdbcImpl")
 public class LoginJdbcImpl implements ILoginDao<User> {
 
     @Autowired
-    DataSourceConfig dataSourceConfig;
+    private DataSourceConfig dataSourceConfig;
 
     @Override
     public User getDataLogin(Login login) throws SQLException, InvalidObjectFactoryException {
@@ -22,6 +25,7 @@ public class LoginJdbcImpl implements ILoginDao<User> {
             "select usr.*, lg.login, lg.password from login_user lg " +
             "join user usr on usr.id_login = lg.id \n" +
             "where lg.login = ? and lg.password = ?";
+
         Administrator administrator = null;
         Client client = null;
         User userFactory = null;

@@ -4,11 +4,14 @@ import com.denisenko.airlineticketsshop.config.DataSourceConfig;
 import com.denisenko.airlineticketsshop.service.exception.database.ConnectionNotSetException;
 import com.denisenko.airlineticketsshop.service.exception.database.CrudOperationNotExecuteException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+@Repository
 public class CookieJdbcImpl implements ICookieJdbc {
 
     @Autowired
