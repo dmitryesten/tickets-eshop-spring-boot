@@ -1,13 +1,13 @@
 package com.denisenko.airlineticketsshop.service.exception;
 
-public class ErrorCustomTemplate {
+public class ErrorResponse {
 
     private String errorCode;
     private String field;
     private String message;
 
 
-    public ErrorCustomTemplate(String errorCode, String field, String message) {
+    public ErrorResponse(String errorCode, String field, String message) {
         this.errorCode = errorCode;
         this.field = field;
         this.message = message;

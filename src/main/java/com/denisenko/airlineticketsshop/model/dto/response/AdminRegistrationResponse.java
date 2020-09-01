@@ -12,7 +12,7 @@ public class AdminRegistrationResponse extends AbstractUserRegistrationResponseD
     private String position;
 
 
-    private AdminRegistrationResponse(){
+    public AdminRegistrationResponse(){
         super();
     }
 

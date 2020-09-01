@@ -2,19 +2,23 @@ package com.denisenko.airlineticketsshop.model.dto.response;
 
 import com.denisenko.airlineticketsshop.model.entity.UserType;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 public class ClientRegistrationResponse extends AbstractUserRegistrationResponseDto {
 
     @NotNull(message = "Email may not be null")
     @NotEmpty(message = "Email may not be empty")
+    @Email
     private String email;
+
     @NotNull(message = "Phone may not be null")
     @NotEmpty (message = "Phone may not be empty")
     private String phone;
 
-    private ClientRegistrationResponse(){}
+    public ClientRegistrationResponse(){}
     public static ClientRegistrationResponse.Builder builder() {
         return new ClientRegistrationResponse().new Builder();
     }

@@ -22,7 +22,7 @@ public class AdminRegistrationController {
 
     @Autowired
     @Qualifier("userCreateJdbc")
-    private IUserCreateDao adminCreateJdbc;
+    private IUserCreateDao<Administrator> adminCreateJdbc;
 
     @PostMapping(value = "/api/admin")
     public ResponseEntity<AdminRegistrationResponse> createAdmin(@Valid @RequestBody AdminRegistrationRequest request) throws SQLException {
@@ -34,7 +34,7 @@ public class AdminRegistrationController {
         user.setUserType(UserType.ADMIN);
         user.setPosition(request.getPosition());
 
-        Administrator createdUser = (Administrator) adminCreateJdbc.create(user);
+        Administrator createdUser = adminCreateJdbc.create(user);
 
         return ResponseEntity.ok()
             .body(AdminRegistrationResponse.builder()

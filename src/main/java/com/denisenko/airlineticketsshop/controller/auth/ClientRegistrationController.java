@@ -22,10 +22,10 @@ public class ClientRegistrationController {
 
     @Autowired
     @Qualifier("userCreateJdbc")
-    private IUserCreateDao clientCreateJdbc;
+    private IUserCreateDao<Client> clientCreateJdbc;
 
     @PostMapping(value = "/api/client")
-    public ResponseEntity<ClientRegistrationResponse> createAdmin(@Valid @RequestBody ClientRegistrationRequest request) throws SQLException {
+    public ResponseEntity<ClientRegistrationResponse> createClient(@Valid @RequestBody ClientRegistrationRequest request) throws SQLException {
         Client user = new Client.ClientBuilder()
             .setFirstName(request.getFirstName())
             .setLastName(request.getLastName())
@@ -36,7 +36,7 @@ public class ClientRegistrationController {
             .setUserType(UserType.CLIENT)
             .build();
 
-        Client createdUser = (Client) clientCreateJdbc.create(user);
+        Client createdUser = clientCreateJdbc.create(user);
 
         return ResponseEntity.ok()
             .body(ClientRegistrationResponse.builder()
