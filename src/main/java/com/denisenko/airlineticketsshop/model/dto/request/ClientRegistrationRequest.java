@@ -7,32 +7,33 @@ import javax.validation.constraints.Pattern;
 
 public class ClientRegistrationRequest {
 
-    @NotNull(message = "FirstName may not be null")
-    @NotEmpty(message = "FirstName may not be empty")
+    @NotNull(message = "FirstName mustn't be null")
+    @NotEmpty(message = "FirstName mustn't be empty")
     private String firstName;
 
-    @NotNull(message = "LastName may not be null")
-    @NotEmpty (message = "LastName may not be empty")
+    @NotNull(message = "LastName mustn't be null")
+    @NotEmpty (message = "LastName mustn't be empty")
     private String lastName;
 
-    @NotNull(message = "Patronymic may not be null")
+    @NotNull(message = "Patronymic mustn't be null")
     private String patronymic;
 
-    @NotNull(message = "Email may not be null")
-    @NotEmpty (message = "Email may not be empty")
-    @Email
+    @NotNull(message = "Email mustn't be null")
+    @NotEmpty (message = "Email mustn't be empty")
+    @Email(message = "Email doesn't match the format")
     private String email;
 
-    @NotNull(message = "Phone may not be null")
-    @NotEmpty (message = "Phone may not be empty")
+    @NotNull(message = "Phone mustn't be null")
+    @NotEmpty (message = "Phone mustn't be empty")
+    //@Pattern(message =  "Phone doesn't match the format", regexp = "^\\d{10}$")
     private String phone;
 
-    @NotNull(message = "Login may not be null")
-    @NotEmpty (message = "Login may not be empty")
+    @NotNull(message = "Login mustn't be null")
+    @NotEmpty (message = "Login mustn't be empty")
     private String login;
 
-    @NotNull(message = "Password may not be null")
-    @NotEmpty (message = "Password may not be empty")
+    @NotNull(message = "Password mustn't be null")
+    @NotEmpty (message = "Password mustn't be empty")
     private String password;
 
     public ClientRegistrationRequest(){}

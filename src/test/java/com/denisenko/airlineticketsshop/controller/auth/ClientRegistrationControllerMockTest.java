@@ -10,6 +10,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -49,7 +51,7 @@ class ClientRegistrationControllerMockTest {
        request.setPatronymic("S");
        request.setLogin("W");
        request.setPassword("123");
-       request.setPhone("79088084042");
+       request.setPhone("7");
        request.setEmail("i@mail.ru");
        response = ClientRegistrationResponse.builder()
            .setId(103L)
@@ -72,6 +74,18 @@ class ClientRegistrationControllerMockTest {
         ).andExpect(status().isOk())
          .andExpect(content().contentType(MediaType.APPLICATION_JSON))
          .andExpect(content().json(mapper.writeValueAsString(response)));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"hr@mail,ru", "!#$#@mail.ru", "hr@mail"})
+    public void tesInvalidEmail(String invalidEmail) throws Exception {
+        request.setEmail(invalidEmail);
+        ObjectMapper mapper = new ObjectMapper();
+        this.mockMvc.perform(MockMvcRequestBuilders
+            .post("/api/client")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(mapper.writeValueAsString(request))
+        ).andExpect(status().is4xxClientError());
     }
 
 }

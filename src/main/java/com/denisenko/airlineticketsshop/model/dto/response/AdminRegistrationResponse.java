@@ -7,8 +7,8 @@ import javax.validation.constraints.NotNull;
 
 public class AdminRegistrationResponse extends AbstractUserRegistrationResponseDto {
 
-    @NotNull(message = "Position may not be null")
-    @NotEmpty (message = "Position may not be empty")
+    @NotNull(message = "Position mustn't be null")
+    @NotEmpty (message = "Position mustn't be empty")
     private String position;
 
 

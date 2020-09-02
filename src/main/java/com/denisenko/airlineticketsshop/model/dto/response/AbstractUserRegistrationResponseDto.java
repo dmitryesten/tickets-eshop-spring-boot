@@ -5,21 +5,21 @@ import javax.validation.constraints.NotNull;
 
 public abstract class AbstractUserRegistrationResponseDto {
 
-    @NotNull(message = "ID may not be null")
-    @NotEmpty (message = "ID may not be empty")
+    @NotNull(message = "ID may mustn't be null")
+    @NotEmpty (message = "ID may mustn't be empty")
     private long id;
 
-    @NotNull(message = "FirstName may not be null")
-    @NotEmpty (message = "FirstName may not be empty")
+    @NotNull(message = "FirstName mustn't be be null")
+    @NotEmpty (message = "FirstName mustn't be be empty")
     private String firstName;
 
-    @NotNull(message = "LastName may not be null")
+    @NotNull(message = "LastName mustn't be be null")
     @NotEmpty (message = "LastName may not be empty")
     private String lastName;
     private String patronymic;
 
-    @NotNull(message = "UserType may not be null")
-    @NotEmpty (message = "UserType may not be empty")
+    @NotNull(message = "UserType mustn't be be null")
+    @NotEmpty (message = "UserType mustn't be be empty")
     private String userType;
 
 

@@ -1,13 +1,17 @@
 package com.denisenko.airlineticketsshop.model.dto.request;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 
 public class LoginRequestDto {
 
-    @NotNull
+    @NotNull(message = "Login mustn't be null")
+    @NotEmpty (message = "Login mustn't be empty")
     private String login;
-    @NotNull
+
+    @NotNull(message = "Login mustn't be null")
+    @NotEmpty (message = "Login mustn't be empty")
     private String password;
 
     public LoginRequestDto() {}

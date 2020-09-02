@@ -3,6 +3,8 @@ package com.denisenko.airlineticketsshop.model.jdbc;
 import com.denisenko.airlineticketsshop.config.DataSourceConfig;
 import com.denisenko.airlineticketsshop.model.entity.*;
 import com.denisenko.airlineticketsshop.service.exception.InvalidObjectFactoryException;
+import com.denisenko.airlineticketsshop.service.exception.database.ConnectionNotSetException;
+import com.denisenko.airlineticketsshop.service.exception.database.CrudOperationNotExecuteException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
@@ -61,4 +63,23 @@ public class LoginJdbcImpl implements ILoginDao<User> {
 
         return userFactory;
     }
+
+    @Override
+    public boolean checkExistLogin(Login login) {
+        boolean result = false;
+        String sql = "select 1 from dual where exists (select id from login_user lu where lu.login = ? )";
+        try(Connection connection = dataSourceConfig.getDataSource().getConnection()) {
+            try(PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+                preparedStatement.setString(1, login.getLogin());
+                ResultSet resultSet = preparedStatement.executeQuery();
+                result = resultSet.next();
+            } catch (SQLException e){
+                throw new CrudOperationNotExecuteException("Невозможно выполнить запрос",e);
+            }
+        } catch (SQLException e) {
+            throw new ConnectionNotSetException("Невозможно установить соединение с базой данных", e);
+        }
+        return result;
+    }
+
 }

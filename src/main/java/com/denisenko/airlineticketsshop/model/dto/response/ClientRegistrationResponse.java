@@ -9,13 +9,14 @@ import javax.validation.constraints.Pattern;
 
 public class ClientRegistrationResponse extends AbstractUserRegistrationResponseDto {
 
-    @NotNull(message = "Email may not be null")
-    @NotEmpty(message = "Email may not be empty")
-    @Email
+    @NotNull(message = "Email mustn't be null")
+    @NotEmpty(message = "Email mustn't be empty")
+    @Email(message = "Email doesn't match the format")
     private String email;
 
-    @NotNull(message = "Phone may not be null")
-    @NotEmpty (message = "Phone may not be empty")
+    @NotNull(message = "Phone mustn't be null")
+    @NotEmpty (message = "Phone mustn't be empty")
+    //@Pattern(message = "Phone doesn't match the format", regexp = "^\\d{10}$")
     private String phone;
 
     public ClientRegistrationResponse(){}
