@@ -39,14 +39,13 @@ public class LoginJdbcImpl implements ILoginDao<User> {
             ResultSet resultSet = preparedStatement.executeQuery();
             while(resultSet.next()){
                 String userType = resultSet.getString("USER_TYPE").trim().toUpperCase();
-                System.out.println("UserType = "+ userType);
                     userFactory = UserFactoryEntity.getFactory(userType);
                     userFactory.setUserType(userType);
                     userFactory.setId(resultSet.getLong("ID"));
                     userFactory.setFirstName(resultSet.getString("FIRST_NAME"));
                     userFactory.setLastName(resultSet.getString("LAST_NAME"));
                     userFactory.setPatronymicName(resultSet.getString("PATRONYMIC_NAME"));
-                    userFactory.setLoginObject(new Login(resultSet.getString("LOGIN"), resultSet.getString("PASSWORD")));
+                    userFactory.setLoginObject(new Login(resultSet.getLong("ID_LOGIN"), resultSet.getString("LOGIN"), resultSet.getString("PASSWORD")));
 
                 if(userFactory instanceof Administrator){
                     administrator = (Administrator) userFactory;

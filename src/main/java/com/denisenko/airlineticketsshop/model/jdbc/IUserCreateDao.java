@@ -6,19 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public interface IUserCreateDao<T extends User> {
+public interface IUserCreateDao<T extends User> extends IPrimaryKey {
 
     T create(T user) throws SQLException;
-
-
-
-    default long getPrimaryKey(PreparedStatement preparedStatement) throws SQLException {
-        ResultSet rs = preparedStatement.getGeneratedKeys();
-        long id = 0;
-        if (rs.next())
-            id = rs.getInt("ID");
-
-        return id;
-    }
 
 }

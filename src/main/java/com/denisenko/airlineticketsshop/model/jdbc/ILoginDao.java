@@ -7,7 +7,7 @@ import com.denisenko.airlineticketsshop.service.exception.InvalidObjectFactoryEx
 import java.sql.SQLException;
 
 
-public interface ILoginDao<T extends User> {
+public interface ILoginDao<T extends User> extends IPrimaryKey {
 
     T getDataLogin(Login login) throws SQLException, InvalidObjectFactoryException;
 

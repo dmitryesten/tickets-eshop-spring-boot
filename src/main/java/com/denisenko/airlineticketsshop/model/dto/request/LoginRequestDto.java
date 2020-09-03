@@ -16,7 +16,7 @@ public class LoginRequestDto {
 
     public LoginRequestDto() {}
 
-    public LoginRequestDto(@NotNull String login, @NotNull String password) {
+    public LoginRequestDto(@NotEmpty @NotNull String login, @NotEmpty @NotNull String password) {
         this.login = login;
         this.password = password;
     }

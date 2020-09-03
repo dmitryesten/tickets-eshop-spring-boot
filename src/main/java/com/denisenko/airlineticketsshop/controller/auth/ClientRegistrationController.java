@@ -1,8 +1,10 @@
 package com.denisenko.airlineticketsshop.controller.auth;
 
+import com.denisenko.airlineticketsshop.controller.factory.HttpHeaderFactory;
 import com.denisenko.airlineticketsshop.model.entity.Login;
 import com.denisenko.airlineticketsshop.model.entity.Client;
 import com.denisenko.airlineticketsshop.model.entity.UserType;
+import com.denisenko.airlineticketsshop.model.jdbc.ICookieDao;
 import com.denisenko.airlineticketsshop.model.jdbc.IUserCreateDao;
 import com.denisenko.airlineticketsshop.model.jdbc.UserCreateJdbcImpl;
 import com.denisenko.airlineticketsshop.model.dto.request.ClientRegistrationRequest;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.sql.SQLException;
+import java.util.UUID;
 
 @RestController
 public class ClientRegistrationController {
@@ -23,6 +26,9 @@ public class ClientRegistrationController {
     @Autowired
     @Qualifier("userCreateJdbc")
     private IUserCreateDao<Client> clientCreateJdbc;
+
+    @Autowired
+    private ICookieDao cookieDao;
 
     @PostMapping(value = "/api/client")
     public ResponseEntity<ClientRegistrationResponse> createClient(@Valid @RequestBody ClientRegistrationRequest request) throws SQLException {
@@ -38,7 +44,11 @@ public class ClientRegistrationController {
 
         Client createdUser = clientCreateJdbc.create(user);
 
+        String cookieValue =  UUID.randomUUID().toString();
+        cookieDao.create(createdUser.getLoginObject(), cookieValue);
+
         return ResponseEntity.ok()
+            .headers(HttpHeaderFactory.getHttpHeader("JAVASESSIONID", cookieValue))
             .body(ClientRegistrationResponse.builder()
                 .setId(createdUser.getId())
                 .setFirstName(createdUser.getFirstName())

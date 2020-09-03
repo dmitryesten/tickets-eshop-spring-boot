@@ -1,6 +1,5 @@
 package com.denisenko.airlineticketsshop.config;
 
-import com.denisenko.airlineticketsshop.model.entity.Login;
 import com.denisenko.airlineticketsshop.model.entity.User;
 import com.denisenko.airlineticketsshop.model.jdbc.*;
 import org.modelmapper.ModelMapper;
@@ -27,7 +26,7 @@ public class AppConfiguration {
     @Bean
     @Primary
     @Qualifier("cookieJdbc")
-    public ICookieJdbc getCookie(){
+    public ICookieDao getCookie(){
         return new CookieJdbcImpl();
     }
 
