@@ -22,11 +22,12 @@ public class AddResponseHeaderFilter implements Filter {
             Now all post request haven't JAVASESSIONID in header, other type request must have JAVASESSIONID field
             the statement is temporary solution
         */
+        /*
         if(!httpServletRequest.getMethod().equals("POST") ){
             if(!Optional.ofNullable(httpServletRequest.getHeader("JAVASESSIONID")).isPresent()) {
                 throw new CookieNotFoundException("There is not JAVASESSIONID field in the header request " + httpServletRequest.getRequestURL());
             }
-        }
+        }*/
 
         /*
         if(Optional.ofNullable(httpServletRequest.getCookies()).isPresent()) {

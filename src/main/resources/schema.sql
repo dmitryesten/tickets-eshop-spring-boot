@@ -14,7 +14,12 @@ create table if not exists login_user (
 create table if not exists cookie_login (
   id INT default seq_id.nextval primary key,
   id_login INT,
-  value_cookie VARCHAR(250) NOT NULL,
+  cookie_name VARCHAR(50),
+  cookie_value VARCHAR(50),
+  cookie_path VARCHAR(50),
+  cookie_max_age INT,
+  cookie_is_sercure BOOLEAN default false,
+  cookie_is_http_only BOOLEAN default false,
   CONSTRAINT fk_id_login_cookie foreign key (id_login) references login_user(id)
 );
 
@@ -34,7 +39,7 @@ create table if not exists user (
   constraint ck_phone check (case user_type when 'admin' then null end)
 );
 
-create index idx_cookie_login$value on cookie_login (value_cookie);
+create index idx_cookie_login$value on cookie_login (cookie_name, cookie_value);
 
 
 insert into login_user (id, login, password) values (1, 'Test1', '123');
@@ -44,5 +49,5 @@ values (3, 1, 'Admin', 'Adminov', 'Adminovich', 'admin', 'главный мен�
 insert into user (id, id_login, first_name, last_name, patronymic_name, user_type, email, phone)
 values (4, 2, 'Иван', 'Иванов', 'Иванович', 'client',  'iva@mail.ru', '+79008000000');
 
-insert into cookie_login (id_login, value_cookie) values (2, '11-11');
-insert into cookie_login (id_login, value_cookie) values (2, '22-22a');
+insert into cookie_login (id_login, cookie_name, cookie_value, cookie_path, cookie_max_age) values (2, 'JAVASESSIONID', '13', '/', 9000);
+insert into cookie_login (id_login, cookie_name, cookie_value, cookie_path, cookie_max_age) values (2, 'JAVASESSIONID', '14', '/', 4000);

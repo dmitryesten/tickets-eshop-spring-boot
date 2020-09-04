@@ -66,7 +66,8 @@ class AdminRegistrationControllerMockTest {
                 .content(mapper.writeValueAsString(requestCreateAdmin))
         ).andExpect(status().isOk())
          .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-         .andExpect(content().json(mapper.writeValueAsString(registrationResponse)));
+         .andExpect(content().json(mapper.writeValueAsString(registrationResponse)))
+         .andExpect(header().exists("Set-Cookie"));
     }
 
     @Test

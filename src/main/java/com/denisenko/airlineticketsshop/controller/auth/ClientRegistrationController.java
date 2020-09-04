@@ -1,6 +1,7 @@
 package com.denisenko.airlineticketsshop.controller.auth;
 
 import com.denisenko.airlineticketsshop.controller.factory.HttpHeaderFactory;
+import com.denisenko.airlineticketsshop.model.entity.CookieLogin;
 import com.denisenko.airlineticketsshop.model.entity.Login;
 import com.denisenko.airlineticketsshop.model.entity.Client;
 import com.denisenko.airlineticketsshop.model.entity.UserType;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.Cookie;
 import javax.validation.Valid;
 import java.sql.SQLException;
 import java.util.UUID;
@@ -44,11 +46,15 @@ public class ClientRegistrationController {
 
         Client createdUser = clientCreateJdbc.create(user);
 
-        String cookieValue =  UUID.randomUUID().toString();
-        cookieDao.create(createdUser.getLoginObject(), cookieValue);
+        Cookie cookie = new Cookie("JAVASESSIONID", UUID.randomUUID().toString());
+        cookie.setMaxAge(7 * 24 * 60 * 60); // expires in 7 days
+        cookie.setPath("/");
+        cookie.setSecure(false);
+        cookie.setHttpOnly(false);
+        CookieLogin cookieLogin = cookieDao.create(createdUser.getLoginObject(), cookie);
 
         return ResponseEntity.ok()
-            .headers(HttpHeaderFactory.getHttpHeader("JAVASESSIONID", cookieValue))
+            .headers(HttpHeaderFactory.getHttpHeader(cookieLogin))
             .body(ClientRegistrationResponse.builder()
                 .setId(createdUser.getId())
                 .setFirstName(createdUser.getFirstName())

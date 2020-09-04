@@ -1,23 +1,17 @@
 package com.denisenko.airlineticketsshop.controller.factory;
 
-import org.apache.catalina.filters.HttpHeaderSecurityFilter;
+import com.denisenko.airlineticketsshop.model.entity.CookieLogin;
 import org.springframework.http.HttpHeaders;
 
-import java.util.UUID;
 
 public class HttpHeaderFactory {
 
     private HttpHeaderFactory(){};
 
-    public static HttpHeaders getHttpHeader(){
-        return HttpHeaderFactory.getHttpHeader("JAVASESSIONID", UUID.randomUUID().toString());
-    }
-
-    public static HttpHeaders getHttpHeader(String nameCookie, String valueCookie){
+    public static HttpHeaders getHttpHeader(CookieLogin cookieLogin){
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.set(nameCookie, valueCookie);
+        httpHeaders.set("Set-Cookie", cookieLogin.getCookieString());
         return httpHeaders;
     }
-
 
 }

@@ -52,6 +52,7 @@ public class AdminRegistrationControllerTest {
         Assertions.assertThat(actualResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
         Assertions.assertThat(actualResponse.getBody().getId()).isNotZero();
         Assertions.assertThat(actualResponse.getBody().getUserType()).isEqualTo(UserType.ADMIN.getTypeEntityString());
+        Assertions.assertThat(actualResponse.getHeaders().get("Set-Cookie")).isNotEmpty();
     }
 
 

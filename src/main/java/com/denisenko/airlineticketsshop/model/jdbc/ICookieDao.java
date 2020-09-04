@@ -1,13 +1,15 @@
 package com.denisenko.airlineticketsshop.model.jdbc;
 
+import com.denisenko.airlineticketsshop.model.entity.CookieLogin;
 import com.denisenko.airlineticketsshop.model.entity.Login;
 
+import javax.servlet.http.Cookie;
 import java.sql.SQLException;
 
 public interface ICookieDao extends IPrimaryKey {
 
-    void delete(String cookie) throws SQLException;
+    void delete(Cookie cookie) throws SQLException;
 
-    long create(Login login, String valueCookie);
+    CookieLogin create(Login login, Cookie cookie);
 
 }

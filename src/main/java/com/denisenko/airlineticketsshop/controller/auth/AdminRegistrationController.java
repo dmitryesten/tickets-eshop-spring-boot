@@ -2,10 +2,7 @@ package com.denisenko.airlineticketsshop.controller.auth;
 
 import com.denisenko.airlineticketsshop.controller.factory.HttpHeaderFactory;
 import com.denisenko.airlineticketsshop.model.dto.request.LoginRequestDto;
-import com.denisenko.airlineticketsshop.model.entity.Login;
-import com.denisenko.airlineticketsshop.model.entity.Administrator;
-import com.denisenko.airlineticketsshop.model.entity.User;
-import com.denisenko.airlineticketsshop.model.entity.UserType;
+import com.denisenko.airlineticketsshop.model.entity.*;
 import com.denisenko.airlineticketsshop.model.jdbc.ICookieDao;
 import com.denisenko.airlineticketsshop.model.jdbc.ILoginDao;
 import com.denisenko.airlineticketsshop.model.jdbc.IUserCreateDao;
@@ -16,6 +13,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import javax.crypto.spec.OAEPParameterSpec;
+import javax.servlet.http.Cookie;
 import javax.validation.Valid;
 import java.net.URI;
 import java.sql.SQLException;
@@ -56,11 +55,15 @@ public class AdminRegistrationController {
 
         Administrator createdUser = adminCreateJdbc.create(user);
 
-        String cookieValue =  UUID.randomUUID().toString();
-        cookieDao.create(createdUser.getLoginObject(), cookieValue);
+        Cookie cookie = new Cookie("JAVASESSIONID", UUID.randomUUID().toString());
+        cookie.setMaxAge(7 * 24 * 60 * 60); // expires in 7 days
+        cookie.setPath("/");
+        cookie.setSecure(false);
+        cookie.setHttpOnly(false);
+        CookieLogin cookieLogin = cookieDao.create(createdUser.getLoginObject(), cookie);
 
         return ResponseEntity.ok()
-            .headers(HttpHeaderFactory.getHttpHeader("JAVASESSIONID", cookieValue))
+            .headers(HttpHeaderFactory.getHttpHeader(cookieLogin))
             .body(AdminRegistrationResponse.builder()
                     .setId(createdUser.getId())
                     .setFirstName(createdUser.getFirstName())
