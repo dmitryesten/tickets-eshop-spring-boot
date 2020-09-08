@@ -5,7 +5,7 @@ import com.denisenko.airlineticketsshop.model.entity.UserType;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-public class AdminRegistrationResponse extends AbstractUserRegistrationResponseDto {
+public class AdminRegistrationResponse extends AbstractUserResponseDto {
 
     @NotNull(message = "Position mustn't be null")
     @NotEmpty (message = "Position mustn't be empty")

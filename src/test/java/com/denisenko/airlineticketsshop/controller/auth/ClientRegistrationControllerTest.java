@@ -17,6 +17,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.UUID;
+
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -39,7 +41,7 @@ public class ClientRegistrationControllerTest {
         requestCreateClient.setPatronymic("Ivanovich");
         requestCreateClient.setEmail("ivan@mail.ru");
         requestCreateClient.setPhone("+79008001020");
-        requestCreateClient.setLogin("AdminLogin");
+        requestCreateClient.setLogin("AdminLogin"+ UUID.randomUUID().toString());
         requestCreateClient.setPassword("password123");
     }
 

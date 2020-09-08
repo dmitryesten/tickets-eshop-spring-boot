@@ -3,7 +3,7 @@ package com.denisenko.airlineticketsshop.model.dto.response;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-public abstract class AbstractUserRegistrationResponseDto {
+public abstract class AbstractUserResponseDto {
 
     @NotNull(message = "ID may mustn't be null")
     @NotEmpty (message = "ID may mustn't be empty")
@@ -23,9 +23,9 @@ public abstract class AbstractUserRegistrationResponseDto {
     private String userType;
 
 
-    public AbstractUserRegistrationResponseDto(){}
+    public AbstractUserResponseDto(){}
 
-    public AbstractUserRegistrationResponseDto(@NotNull @NotEmpty long id, @NotNull @NotEmpty String firstName, @NotNull @NotEmpty String lastName, String patronymic, @NotNull @NotEmpty String userType) {
+    public AbstractUserResponseDto(@NotNull @NotEmpty long id, @NotNull @NotEmpty String firstName, @NotNull @NotEmpty String lastName, String patronymic, @NotNull @NotEmpty String userType) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;

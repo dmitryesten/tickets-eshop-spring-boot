@@ -30,9 +30,16 @@ class CookieJdbcImplTest {
     private Cookie testCookie = new Cookie("JAVASESSIONID", "test-value-01");
 
     @Test
-    @Order(2)
+    @Order(3)
     void delete() throws SQLException {
         cookieDao.delete(testCookie);
+    }
+
+    @Test
+    @Order(2)
+    void update(){
+        testCookie.setValue("test-value-01");
+        cookieDao.update(testLogin, testCookie);
     }
 
     @Test

@@ -72,4 +72,24 @@ public class CookieJdbcImpl implements ICookieDao {
         }
         return cookieLogin;
     }
+
+    @Override
+    public void update(Login login, Cookie cookie) {
+        String updateQuery = "update cookie_login set cookie_value = ? where id_login = (select u.id from login_user u where u.login = ?)";
+
+        try(Connection connection = dataSourceConfig.getDataSource().getConnection()) {
+
+            try(PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)){
+                preparedStatement.setString(1, cookie.getValue());
+                preparedStatement.setString(2, login.getLogin());
+                preparedStatement.executeUpdate();
+            } catch (SQLException e){
+                throw new CrudOperationNotExecuteException("Update operation could not execute", e);
+            }
+
+        } catch (SQLException e) {
+            throw new ConnectionNotSetException("Connection has not set with the database", e);
+        }
+    }
+
 }

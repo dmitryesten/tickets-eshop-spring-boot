@@ -5,9 +5,8 @@ import com.denisenko.airlineticketsshop.model.entity.UserType;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 
-public class ClientRegistrationResponse extends AbstractUserRegistrationResponseDto {
+public class ClientRegistrationResponse extends AbstractUserResponseDto {
 
     @NotNull(message = "Email mustn't be null")
     @NotEmpty(message = "Email mustn't be empty")

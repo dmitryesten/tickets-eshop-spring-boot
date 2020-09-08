@@ -12,4 +12,5 @@ public interface ICookieDao extends IPrimaryKey {
 
     CookieLogin create(Login login, Cookie cookie);
 
+    void update(Login login, Cookie cookie);
 }

@@ -4,6 +4,7 @@ import com.denisenko.airlineticketsshop.model.entity.Login;
 import com.denisenko.airlineticketsshop.model.entity.User;
 import com.denisenko.airlineticketsshop.model.jdbc.ILoginDao;
 import com.denisenko.airlineticketsshop.model.dto.request.LoginRequestDto;
+import com.denisenko.airlineticketsshop.model.jdbc.IUserDao;
 import com.denisenko.airlineticketsshop.service.exception.InvalidObjectFactoryException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +20,10 @@ public class LoginService {
     private ModelMapper modelMapper;
 
     @Autowired
-    @Qualifier("loginJdbcImpl")
-    private ILoginDao<? extends User> loginDao;
+    private IUserDao userDao;
 
     public User getUser(Login login) throws SQLException, InvalidObjectFactoryException {
-        return loginDao.getDataLogin(login);
+        return userDao.select(login);
     }
 
 }

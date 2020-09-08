@@ -2,7 +2,6 @@ package com.denisenko.airlineticketsshop.model.jdbc;
 
 
 import com.denisenko.airlineticketsshop.config.AppConfiguration;
-import com.denisenko.airlineticketsshop.config.DataSourceConfig;
 import com.denisenko.airlineticketsshop.model.dto.request.ClientRegistrationRequest;
 import com.denisenko.airlineticketsshop.model.entity.*;
 import com.denisenko.airlineticketsshop.model.dto.request.AdminRegistrationRequest;
@@ -10,7 +9,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -27,7 +25,7 @@ public class UserCreateJdbcTest {
 
     @Autowired
     @Qualifier("userCreateJdbc")
-    private IUserCreateDao userCreateJdbc;
+    private IUserDao userCreateJdbc;
 
     private AdminRegistrationRequest requestAdmin;
     private ClientRegistrationRequest requestClient;

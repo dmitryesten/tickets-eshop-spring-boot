@@ -17,6 +17,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.UUID;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Import(AppConfiguration.class)
@@ -37,7 +39,8 @@ public class AdminRegistrationControllerTest {
             requestCreateAdmin.setLastName("Ivanov");
             requestCreateAdmin.setPatronymic("Ivanovich");
             requestCreateAdmin.setPosition("Sale Manager");
-            requestCreateAdmin.setLogin("AdminLogin");
+            //Avoiding exception unique constraint of database
+            requestCreateAdmin.setLogin("AdminLogin"+ UUID.randomUUID().toString());
             requestCreateAdmin.setPassword("password123");
     }
 
@@ -54,6 +57,5 @@ public class AdminRegistrationControllerTest {
         Assertions.assertThat(actualResponse.getBody().getUserType()).isEqualTo(UserType.ADMIN.getTypeEntityString());
         Assertions.assertThat(actualResponse.getHeaders().get("Set-Cookie")).isNotEmpty();
     }
-
 
 }

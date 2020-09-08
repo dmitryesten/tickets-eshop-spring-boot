@@ -32,9 +32,9 @@ public class AppConfiguration {
 
     @Bean
     @Primary
-    @Qualifier("userCreateJdbc")
-    public IUserCreateDao getCreatedUserJdbc(){
-        return new UserCreateJdbcImpl();
+    @Qualifier("userJdbc")
+    public IUserDao getUserJdbc(){
+        return new UserJdbcImpl();
     }
 
 }

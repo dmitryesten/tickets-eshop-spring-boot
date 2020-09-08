@@ -1,13 +1,13 @@
 package com.denisenko.airlineticketsshop.controller.auth;
 
+import com.denisenko.airlineticketsshop.controller.factory.CookieFactory;
 import com.denisenko.airlineticketsshop.controller.factory.HttpHeaderFactory;
 import com.denisenko.airlineticketsshop.model.entity.CookieLogin;
 import com.denisenko.airlineticketsshop.model.entity.Login;
 import com.denisenko.airlineticketsshop.model.entity.Client;
 import com.denisenko.airlineticketsshop.model.entity.UserType;
 import com.denisenko.airlineticketsshop.model.jdbc.ICookieDao;
-import com.denisenko.airlineticketsshop.model.jdbc.IUserCreateDao;
-import com.denisenko.airlineticketsshop.model.jdbc.UserCreateJdbcImpl;
+import com.denisenko.airlineticketsshop.model.jdbc.IUserDao;
 import com.denisenko.airlineticketsshop.model.dto.request.ClientRegistrationRequest;
 import com.denisenko.airlineticketsshop.model.dto.response.ClientRegistrationResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +26,8 @@ import java.util.UUID;
 public class ClientRegistrationController {
 
     @Autowired
-    @Qualifier("userCreateJdbc")
-    private IUserCreateDao<Client> clientCreateJdbc;
+    @Qualifier("userJdbc")
+    private IUserDao<Client> clientDao;
 
     @Autowired
     private ICookieDao cookieDao;
@@ -44,13 +44,9 @@ public class ClientRegistrationController {
             .setUserType(UserType.CLIENT)
             .build();
 
-        Client createdUser = clientCreateJdbc.create(user);
+        Client createdUser = clientDao.create(user);
 
-        Cookie cookie = new Cookie("JAVASESSIONID", UUID.randomUUID().toString());
-        cookie.setMaxAge(7 * 24 * 60 * 60); // expires in 7 days
-        cookie.setPath("/");
-        cookie.setSecure(false);
-        cookie.setHttpOnly(false);
+        Cookie cookie = CookieFactory.getCookie();
         CookieLogin cookieLogin = cookieDao.create(createdUser.getLoginObject(), cookie);
 
         return ResponseEntity.ok()

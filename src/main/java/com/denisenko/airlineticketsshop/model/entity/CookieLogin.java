@@ -27,6 +27,10 @@ public class CookieLogin  {
         this.login = login;
     }
 
+    public CookieLogin(Login login){
+        this.login = login;
+    }
+
     public long getId() {
         return id;
     }
