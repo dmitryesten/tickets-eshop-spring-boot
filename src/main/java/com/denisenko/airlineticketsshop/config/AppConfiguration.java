@@ -1,6 +1,7 @@
 package com.denisenko.airlineticketsshop.config;
 
 import com.denisenko.airlineticketsshop.model.entity.User;
+import com.denisenko.airlineticketsshop.model.hibernate.LoginHibernateImpl;
 import com.denisenko.airlineticketsshop.model.jdbc.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -22,6 +23,11 @@ public class AppConfiguration {
     public ILoginDao<User> getLogin(){
         return new LoginJdbcImpl();
     }
+
+    @Bean
+    @Primary
+    @Qualifier("loginHibernateImpl")
+    public LoginHibernateImpl getLoginHibernate(){return new LoginHibernateImpl();}
 
     @Bean
     @Primary

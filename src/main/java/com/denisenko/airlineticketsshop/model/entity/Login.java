@@ -1,21 +1,25 @@
 package com.denisenko.airlineticketsshop.model.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-@Table(name="LOGIN")
-public class Login extends User {
+@Table(name = "login_user")
+public class Login {
     @Id
+    @Column(name = "id")
+    @GeneratedValue(generator = "common_seq_id", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name="common_seq_id", sequenceName="SEQ_ID", allocationSize=1)
     private long id;
 
     @NotNull
+    @Column(name = "login")
     private String login;
 
     @NotNull
+    @Column(name = "password")
     private String password;
 
     public Login(){}

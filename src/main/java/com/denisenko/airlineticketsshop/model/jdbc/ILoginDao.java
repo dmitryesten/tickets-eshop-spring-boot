@@ -13,4 +13,6 @@ public interface ILoginDao<T extends User> extends IPrimaryKey {
 
     boolean checkExistLogin(Login login);
 
+    Login create(Login login);
+
 }

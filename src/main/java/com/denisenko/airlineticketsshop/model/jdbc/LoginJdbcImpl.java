@@ -81,4 +81,9 @@ public class LoginJdbcImpl implements ILoginDao<User> {
         return result;
     }
 
+    @Override
+    public Login create(Login login) {
+        return null;
+    }
+
 }
