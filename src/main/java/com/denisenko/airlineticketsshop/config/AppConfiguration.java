@@ -1,6 +1,7 @@
 package com.denisenko.airlineticketsshop.config;
 
 import com.denisenko.airlineticketsshop.model.entity.User;
+import com.denisenko.airlineticketsshop.model.hibernate.CookieHibernateImpl;
 import com.denisenko.airlineticketsshop.model.hibernate.LoginHibernateImpl;
 import com.denisenko.airlineticketsshop.model.jdbc.*;
 import org.modelmapper.ModelMapper;
@@ -34,6 +35,12 @@ public class AppConfiguration {
     @Qualifier("cookieJdbc")
     public ICookieDao getCookie(){
         return new CookieJdbcImpl();
+    }
+
+    @Bean
+    @Qualifier("cookieHibernateImpl")
+    public ICookieDao getCookieHibernate(){
+        return new CookieHibernateImpl();
     }
 
     @Bean

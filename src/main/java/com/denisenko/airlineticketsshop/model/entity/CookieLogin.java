@@ -1,17 +1,34 @@
 package com.denisenko.airlineticketsshop.model.entity;
 
-import javax.persistence.Entity;
+import org.hibernate.annotations.Type;
+
+import javax.persistence.*;
 import javax.servlet.http.Cookie;
 import javax.validation.constraints.NotNull;
 
+@Entity
+@Table(name = "cookie_login")
+public class CookieLogin {
 
-public class CookieLogin  {
-
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(generator = "common_seq_id", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name="common_seq_id", sequenceName="SEQ_ID", allocationSize=1)
     private long id;
 
+    @AttributeOverrides(
+        @AttributeOverride(
+            name = "name",
+            column = @Column( name = "cookie_name" )
+        )
+    )
     private Cookie cookie;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @PrimaryKeyJoinColumn
     private Login login;
+
+    public CookieLogin(){}
 
     public CookieLogin(Cookie cookie) {
         this(0L, cookie, null);

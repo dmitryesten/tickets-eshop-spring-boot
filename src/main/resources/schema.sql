@@ -12,8 +12,9 @@ create table if not exists login_user (
 );
 
 create table if not exists cookie_login (
-  id INT default seq_id.nextval primary key,
+  id BIGINT default seq_id.nextval primary key,
   id_login INT,
+  cookie_object OTHER,
   cookie_name VARCHAR(50),
   cookie_value VARCHAR(50),
   cookie_path VARCHAR(50),

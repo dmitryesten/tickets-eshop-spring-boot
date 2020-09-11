@@ -5,6 +5,7 @@ import com.denisenko.airlineticketsshop.model.entity.Login;
 
 import javax.servlet.http.Cookie;
 import java.sql.SQLException;
+import java.util.List;
 
 public interface ICookieDao extends IPrimaryKey {
 
@@ -13,4 +14,6 @@ public interface ICookieDao extends IPrimaryKey {
     CookieLogin create(Login login, Cookie cookie);
 
     void update(Login login, Cookie cookie);
+
+    List<CookieLogin> getCookieByLoginId(Login login);
 }

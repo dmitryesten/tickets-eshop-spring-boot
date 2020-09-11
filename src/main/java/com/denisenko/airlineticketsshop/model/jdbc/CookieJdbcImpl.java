@@ -13,6 +13,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
 @Repository
 public class CookieJdbcImpl implements ICookieDao {
@@ -90,6 +91,11 @@ public class CookieJdbcImpl implements ICookieDao {
         } catch (SQLException e) {
             throw new ConnectionNotSetException("Connection has not set with the database", e);
         }
+    }
+
+    @Override
+    public List<CookieLogin> getCookieByLoginId(Login login) {
+        return null;
     }
 
 }
