@@ -26,11 +26,10 @@ import static org.junit.jupiter.api.Assertions.*;
 class CookieHibernateImplTest {
 
     @Autowired
-    private SessionFactory sessionFactory;
+    private ICookieDao cookieHibernate;
 
     @Autowired
-    @Qualifier("cookieHibernateImpl")
-    private ICookieDao cookieHibernate;
+    private SessionFactory sessionFactory;
 
     @Test
     void create() {
@@ -38,21 +37,24 @@ class CookieHibernateImplTest {
         CookieLogin cookieLogin = cookieHibernate.create(login, CookieFactory.getCookie());
         Assert.assertNotEquals(0, cookieLogin.getId());
         Assert.assertNotEquals(-1, cookieLogin.getId());
+        System.out.println("CookieLogin coolie = " + cookieLogin.getCookie().toString());
     }
 
     @Test
     void testGetByLogin(){
-        sessionFactory.openSession();
-        Login login = new Login(1L, "Test1", "123");
-        cookieHibernate.create(login, CookieFactory.getCookie());
-        cookieHibernate.create(login, CookieFactory.getCookie());
 
+        Login login = new Login(1L, "Test12", "123");
+        //cookieHibernate.create(login, CookieFactory.getCookie());
         List<CookieLogin> cookieLogin = cookieHibernate.getCookieByLoginId(login);
         Assert.assertNotNull(cookieLogin);
         System.out.println(cookieLogin);
         cookieLogin.stream().forEach(s -> System.out.println("Cookie = "+ s.getCookie() ));
-        sessionFactory.close();
 
+    }
+
+    @Test
+    void testGet() {
+        CookieLogin cookieLogin = sessionFactory.openSession().get(CookieLogin.class, 101L);
     }
 
 }

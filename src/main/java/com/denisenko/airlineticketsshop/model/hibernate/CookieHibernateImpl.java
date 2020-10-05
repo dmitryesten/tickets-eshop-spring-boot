@@ -1,5 +1,7 @@
 package com.denisenko.airlineticketsshop.model.hibernate;
 
+import com.denisenko.airlineticketsshop.config.DataSourceConfig;
+import com.denisenko.airlineticketsshop.model.entity.AppCookie;
 import com.denisenko.airlineticketsshop.model.entity.CookieLogin;
 import com.denisenko.airlineticketsshop.model.entity.Login;
 import com.denisenko.airlineticketsshop.model.jdbc.ICookieDao;
@@ -12,12 +14,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.Cookie;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-@Transactional
 @Qualifier("cookieHibernateImpl")
-public class CookieHibernateImpl implements ICookieDao {
+public class CookieHibernateImpl implements ICookieDao  {
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -30,7 +32,7 @@ public class CookieHibernateImpl implements ICookieDao {
     @Override
     public CookieLogin create(Login login, Cookie cookie) {
         Session session = sessionFactory.openSession();
-        CookieLogin cookieLogin = new CookieLogin(cookie, login);
+        CookieLogin cookieLogin = new CookieLogin((AppCookie) cookie, login);
         long id = (long) session.save(cookieLogin);
         cookieLogin.setId(id);
         return cookieLogin;
@@ -46,7 +48,6 @@ public class CookieHibernateImpl implements ICookieDao {
     @Override
     public List<CookieLogin> getCookieByLoginId(Login login) {
         Session session = sessionFactory.openSession();
-        return session.createQuery("from CookieLogin")
-            .list();
+        return new ArrayList<>();
     }
 }

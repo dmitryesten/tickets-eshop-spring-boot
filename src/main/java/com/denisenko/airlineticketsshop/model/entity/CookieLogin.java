@@ -1,14 +1,12 @@
 package com.denisenko.airlineticketsshop.model.entity;
 
-import org.hibernate.annotations.Type;
-
 import javax.persistence.*;
 import javax.servlet.http.Cookie;
-import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "cookie_login")
-public class CookieLogin {
+public class CookieLogin implements Serializable {
 
     @Id
     @Column(name = "id")
@@ -16,13 +14,16 @@ public class CookieLogin {
     @SequenceGenerator(name="common_seq_id", sequenceName="SEQ_ID", allocationSize=1)
     private long id;
 
-    @AttributeOverrides(
-        @AttributeOverride(
-            name = "name",
-            column = @Column( name = "cookie_name" )
-        )
-    )
-    private Cookie cookie;
+    @Embedded
+    @AttributeOverrides({
+        @AttributeOverride(name = "name", column = @Column(name = "cookie_name")),
+        @AttributeOverride(name = "value", column = @Column(name = "cookie_value")),
+        @AttributeOverride(name = "name", column = @Column(name = "cookie_path")),
+        @AttributeOverride(name = "maxAge", column = @Column(name = "cookie_max_age")),
+        @AttributeOverride(name = "secure", column = @Column(name = "cookie_is_sercure")),
+        @AttributeOverride(name = "httpOnly", column = @Column(name = "cookie_is_http_only"))
+    })
+    private AppCookie cookie;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @PrimaryKeyJoinColumn
@@ -30,15 +31,15 @@ public class CookieLogin {
 
     public CookieLogin(){}
 
-    public CookieLogin(Cookie cookie) {
+    public CookieLogin(AppCookie cookie) {
         this(0L, cookie, null);
     }
 
-    public CookieLogin(Cookie cookie, Login login) {
+    public CookieLogin(AppCookie cookie, Login login) {
         this(0L, cookie, login);
     }
 
-    public CookieLogin(long id, Cookie cookie, Login login) {
+    public CookieLogin(long id, AppCookie cookie, Login login) {
         this.id = id;
         this.cookie = cookie;
         this.login = login;
@@ -46,6 +47,9 @@ public class CookieLogin {
 
     public CookieLogin(Login login){
         this.login = login;
+    }
+
+    public CookieLogin(Cookie cookie) {
     }
 
     public long getId() {
@@ -60,7 +64,7 @@ public class CookieLogin {
         return cookie;
     }
 
-    public void setCookie(Cookie cookie) {
+    public void setCookie(AppCookie cookie) {
         this.cookie = cookie;
     }
 

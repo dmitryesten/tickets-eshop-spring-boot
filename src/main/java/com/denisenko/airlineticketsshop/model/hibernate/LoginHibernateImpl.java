@@ -1,5 +1,6 @@
 package com.denisenko.airlineticketsshop.model.hibernate;
 
+import com.denisenko.airlineticketsshop.config.DataSourceConfig;
 import com.denisenko.airlineticketsshop.model.entity.Login;
 import com.denisenko.airlineticketsshop.model.entity.User;
 import com.denisenko.airlineticketsshop.model.jdbc.ILoginDao;
@@ -18,7 +19,7 @@ import java.util.Optional;
 @Repository
 @Transactional
 @Qualifier("loginHibernateImpl")
-public class LoginHibernateImpl implements ILoginDao {
+public class LoginHibernateImpl implements ILoginDao<User> {
 
     @Autowired
     private SessionFactory sessionFactory;

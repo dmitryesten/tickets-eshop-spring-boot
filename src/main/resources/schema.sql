@@ -14,7 +14,6 @@ create table if not exists login_user (
 create table if not exists cookie_login (
   id BIGINT default seq_id.nextval primary key,
   id_login INT,
-  cookie_object OTHER,
   cookie_name VARCHAR(50),
   cookie_value VARCHAR(50),
   cookie_path VARCHAR(50),
@@ -50,3 +49,5 @@ values (4, 2, 'Иван', 'Иванов', 'Иванович', 'client',  'iva@ma
 
 insert into cookie_login (id_login, cookie_name, cookie_value, cookie_path, cookie_max_age) values (1, 'JAVASESSIONID', '13', '/', 9000);
 insert into cookie_login (id_login, cookie_name, cookie_value, cookie_path, cookie_max_age) values (2, 'JAVASESSIONID', '14', '/', 4000);
+
+

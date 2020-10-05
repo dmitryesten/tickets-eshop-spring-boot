@@ -30,6 +30,7 @@ public class ClientRegistrationController {
     private IUserDao<Client> clientDao;
 
     @Autowired
+    @Qualifier("cookieJdbc")
     private ICookieDao cookieDao;
 
     @PostMapping(value = "/api/client")

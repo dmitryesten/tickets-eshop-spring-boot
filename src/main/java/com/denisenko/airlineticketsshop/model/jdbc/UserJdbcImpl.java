@@ -68,7 +68,7 @@ public class UserJdbcImpl implements IUserDao<User> {
                 "join user usr on usr.id_login = lg.id\n" +
                 "join cookie_login cl on cl.id_login = lg.id\n" +
                 "where cl.cookie_value = ?";
-            CookieLogin cookieLogin = new CookieLogin(cookie);
+            CookieLogin cookieLogin = new CookieLogin((AppCookie) cookie);
         return select(cookieLogin, querySelectByCookieValue);
     }
 

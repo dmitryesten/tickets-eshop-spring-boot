@@ -29,6 +29,7 @@ public class AdminRegistrationController {
     private IUserDao<Administrator> adminDao;
 
     @Autowired
+    @Qualifier("cookieJdbc")
     private ICookieDao cookieDao;
 
 
