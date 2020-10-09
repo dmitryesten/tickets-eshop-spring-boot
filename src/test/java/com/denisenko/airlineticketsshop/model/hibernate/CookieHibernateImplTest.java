@@ -1,7 +1,9 @@
 package com.denisenko.airlineticketsshop.model.hibernate;
 
 import com.denisenko.airlineticketsshop.config.AppConfiguration;
+import com.denisenko.airlineticketsshop.config.DataSourceConfig;
 import com.denisenko.airlineticketsshop.controller.factory.CookieFactory;
+import com.denisenko.airlineticketsshop.model.entity.AppCookie;
 import com.denisenko.airlineticketsshop.model.entity.CookieLogin;
 import com.denisenko.airlineticketsshop.model.entity.Login;
 import com.denisenko.airlineticketsshop.model.jdbc.ICookieDao;
@@ -21,7 +23,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@Import({AppConfiguration.class})
+@Import({AppConfiguration.class, DataSourceConfig.class})
 @DataJpaTest
 class CookieHibernateImplTest {
 
@@ -54,7 +56,13 @@ class CookieHibernateImplTest {
 
     @Test
     void testGet() {
-        CookieLogin cookieLogin = sessionFactory.openSession().get(CookieLogin.class, 101L);
+        AppCookie appCookie = new AppCookie("AppCookie", "888");
+        CookieLogin login = new CookieLogin(appCookie, new Login(1L, "Test12", "123"));
+        long insertedCookieLoginId  = (long) sessionFactory.openSession().save(login);
+        System.out.println("ID = " + insertedCookieLoginId);
+
+        CookieLogin cookieLogin = sessionFactory.openSession().get(CookieLogin.class, insertedCookieLoginId);
+        System.out.println("Cookie  " + cookieLogin.getCookie());
     }
 
 }

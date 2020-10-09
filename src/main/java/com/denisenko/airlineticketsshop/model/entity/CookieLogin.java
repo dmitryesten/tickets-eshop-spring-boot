@@ -14,19 +14,20 @@ public class CookieLogin implements Serializable {
     @SequenceGenerator(name="common_seq_id", sequenceName="SEQ_ID", allocationSize=1)
     private long id;
 
-    @Embedded
+
     @AttributeOverrides({
         @AttributeOverride(name = "name", column = @Column(name = "cookie_name")),
         @AttributeOverride(name = "value", column = @Column(name = "cookie_value")),
-        @AttributeOverride(name = "name", column = @Column(name = "cookie_path")),
+        @AttributeOverride(name = "path", column = @Column(name = "cookie_path")),
         @AttributeOverride(name = "maxAge", column = @Column(name = "cookie_max_age")),
         @AttributeOverride(name = "secure", column = @Column(name = "cookie_is_sercure")),
         @AttributeOverride(name = "httpOnly", column = @Column(name = "cookie_is_http_only"))
     })
+    @Embedded
     private AppCookie cookie;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @PrimaryKeyJoinColumn
+    @ManyToOne
+    @JoinColumn(name = "id_login")
     private Login login;
 
     public CookieLogin(){}
@@ -60,7 +61,7 @@ public class CookieLogin implements Serializable {
         this.id = id;
     }
 
-    public Cookie getCookie() {
+    public AppCookie getCookie() {
         return cookie;
     }
 
